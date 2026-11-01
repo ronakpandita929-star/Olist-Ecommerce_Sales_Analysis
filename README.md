@@ -1,168 +1,145 @@
-# Olist E-Commerce Sales Analysis --- 
+# Olist E-Commerce Sales Analysis
 
-## 1. Project Overview
+**End-to-end data analytics project: Excel (data cleaning) → MySQL (analysis) → Power BI (dashboard)**
 
-This project analyzes the Olist e-commerce dataset to understand sales
-performance, payment behavior, order trends, delivery performance, and
-customer reviews. MySQL is used for data querying and Power BI for data
-modeling, DAX measures, and interactive dashboards.
+## 📌 Project Overview
 
-## 2. Tools and Skills
+This project analyzes the Brazilian e-commerce dataset from **Olist** to understand sales performance, product and category trends, payment behavior, delivery efficiency, and customer satisfaction.
 
--   **MySQL:** data exploration, joins, aggregations, validation, and
-    business analysis.
--   **Power BI:** data modeling, DAX, KPI cards, charts, and interactive
-    dashboards.
--   **Analysis areas:** revenue, product categories, payment methods,
-    order status, delivery performance, and customer reviews.
+The workflow covers the full analytics pipeline:
 
-## 3. Executive Summary
+| Stage | Tool | Purpose |
+|-------|------|---------|
+| 1. Data Cleaning | **Microsoft Excel** | Inspect, clean, and standardize raw CSV files before import |
+| 2. Data Analysis | **MySQL 8.0 / Workbench** | Query, validate, and analyze the data with SQL |
+| 3. Visualization | **Power BI** | Build the data model, DAX measures, and interactive dashboards |
 
-The current Power BI screenshots show these preliminary metrics:
+---
 
-  Metric                    Current dashboard value
-  ----------------------- -------------------------
-  Total item revenue                     R\$ 13.59M
-  Total payment value                    R\$ 16.01M
-  Orders with items                             99K
-  Units sold                                   113K
-  Average review score                     4.01 / 5
-  Average delivery time                  12.50 days
-  Late delivery rate                          8.11%
-  Total reviews shown                           279
+## 🎯 Business Questions
 
-**Important:** These values are transcribed from the current dashboard
-screenshots. Recheck them after the final data refresh and after
-clearing unintended filters.
+1. How many orders and customers are represented in the data?
+2. How does item revenue change month by month?
+3. Which products and product categories generate the most revenue?
+4. Which payment methods contribute the most payment value?
+5. Which customers have the highest item spending?
+6. How long does delivery take on average?
+7. What percentage of delivered orders arrive late?
+8. What does the review-score distribution show?
 
-Item revenue and payment value are different metrics. Item revenue is
-based on item prices, while payment value is based on payment records.
-Payment records can contain multiple entries for one order.
+---
 
-## 4. Sales Performance
+## 🛠️ Tools & Skills Demonstrated
 
-The Sales Overview page reports approximately **R\$ 13.59M in item
-revenue**. The Top 10 Product Categories chart currently shows
-categories such as `beleza_saude`, `relogios_presentes`, and
-`cama_mesa_banho` among the leading categories by item revenue.
+- **Excel:** data cleaning, handling missing values and duplicates, fixing data types and date formats, standardizing text fields
+- **MySQL:** joins, aggregations, subqueries, date functions, data-quality checks, validation
+- **Power BI:** data modeling, DAX measures, KPI cards, interactive charts, slicers
+- **Analytics:** KPI definition, trend analysis, data validation, business storytelling
 
-**Business implications:** - Monitor high-revenue categories for stock
-availability and merchandising opportunities. - Use monthly revenue
-trends to identify seasonal demand and changes in sales. - Compare
-category performance over time before planning promotions.
+---
 
-## 5. Payment Analysis
+## 🔄 Project Workflow
 
-The current Payment Method Analysis visual shows: - Credit card:
-approximately **78.35%** of payment value. - Boleto: approximately
-**17.92%**. - Voucher: approximately **2.37%**. - Other methods: the
-remaining share.
+### 1. Data Cleaning (Excel)
+- Reviewed the raw Olist CSV files for missing values, duplicates, and inconsistent formats
+- Removed duplicate records and corrected data types (dates, numbers, text)
+- Standardized fields to make them ready for database import
 
-**Business implications:** - Credit card is the dominant payment method
-in the current report. - Maintain a reliable card-payment experience and
-monitor payment failures. - Continue supporting boleto as a meaningful
-secondary method. - Monitor smaller payment methods for changes in
-customer preferences.
+### 2. Data Analysis (MySQL)
+- Imported the cleaned datasets into MySQL
+- Checked row counts and duplicate identifiers
+- Created a clean orders table with unique `order_id` values
+- Validated order-item uniqueness
+- Wrote SQL queries for:
+  - Overall business KPIs and order status distribution
+  - Monthly sales trends
+  - Top products and product-category revenue
+  - Customer spending
+  - Payment method analysis
+  - Review score distribution
+  - Average delivery time and late delivery percentage
+  - Seller revenue
 
-These percentages should be revalidated after the final refresh.
+### 3. Dashboard (Power BI)
+- Built a data model connecting orders, items, payments, products, and reviews
+- Created DAX measures for revenue, orders, delivery time, and late-delivery rate
+- Designed interactive dashboards covering sales, payments and orders, delivery, and reviews
 
-## 6. Order Analysis
+---
 
-The Payments & Orders page compares payment value by method, order
-status, and monthly order volume.
+## 📊 Key Findings
 
-**Business implications:** - Track monthly order volume to identify
-seasonal patterns and demand peaks. - Monitor cancelled and unavailable
-orders for possible fulfilment or stock issues. - Use distinct counts of
-`order_id` when counting orders from tables that can contain multiple
-rows per order.
+| Metric | Value |
+|--------|-------|
+| Total item revenue | **R$ 13.59M** |
+| Total payment value | R$ 16.01M |
+| Unique orders | **98,666** |
+| Units sold | ~113K |
+| Highest-revenue month | **Nov 2017** (R$ 1,010,271) |
+| Top categories by revenue | `beleza_saude`, `relogios_presentes`, `cama_mesa_banho` |
+| Top payment method | **Credit card** (~78.35% of payment value) |
+| Boleto share | ~17.92% |
+| Average delivery time | **12.50 days** |
+| Late delivery rate | **8.11%** |
+| Average review score | 4.01 / 5 (available sample) |
 
-The monthly order-volume chart is final only when its X-axis uses the
-chronological `Month Year` field and its Y-axis uses a distinct count of
-`order_id`.
+### Insights
+- **Sales:** Revenue is concentrated in a few categories, so these need strong stock availability and merchandising focus. November 2017 was the peak month, suggesting strong seasonal demand.
+- **Payments:** Credit card dominates, with boleto as a meaningful secondary method.
+- **Delivery:** About 1 in 12 delivered orders arrives late, so late deliveries are worth investigating by seller, category, and region.
+- **Customer satisfaction:** The average review score is above 4, and low ratings should be reviewed alongside delivery delays.
 
-## 7. Delivery Performance
+---
 
-The current dashboard reports an **average delivery time of 12.50 days**
-and a **late delivery rate of 8.11%**.
+## 📈 Dashboard Preview
 
-The late-delivery rate should be calculated as late delivered orders
-divided by all delivered orders. Orders without a delivery timestamp
-should be excluded from this denominator.
+> Add your Power BI screenshots to an `images/` folder and update the paths below.
 
-**Business implications:** - Monitor delivery time over time and across
-destinations. - Investigate late deliveries by seller, product category,
-geography, and month. - Compare estimated and actual delivery dates to
-identify logistics bottlenecks. - Ensure the late-delivery count and
-percentage use the same delivered-order population.
+| Sales Overview | Payments & Orders |
+|----------------|-------------------|
+| ![Sales Overview](images/sales_overview.png) | ![Payments & Orders](images/payments_orders.png) |
 
-## 8. Customer Review Analysis
+| Delivery Performance | Customer Reviews |
+|----------------------|------------------|
+| ![Delivery](images/delivery.png) | ![Reviews](images/reviews.png) |
 
-The dashboard reports an **average review score of 4.01 out of 5**. The
-review distribution chart shows ratings from 1 to 5, with the 5-star
-group appearing largest in the current screenshot.
+---
 
-**Business implications:** - The average score gives a high-level view
-of customer satisfaction. - Review-score distribution helps reveal
-negative experiences that an average can hide. - Investigate low ratings
-alongside delivery delays, sellers, and product categories. - Analyze
-review comments, where available, to identify recurring customer
-concerns.
+## ⚠️ Data Limitations
 
-**Data validation warning:** The screenshot shows **279 total reviews**,
-while other dashboard metrics show tens of thousands of orders. This
-could result from a filter, incomplete review-table import, or a
-model/measure issue. Validate the review row count and distinct
-`review_id` count in MySQL and Power BI before publishing this as the
-dataset-wide total.
+- The review table contains only **279 unique reviews**, which is not representative of the full Olist dataset. Review-related findings are preliminary.
+- Customer and product-category tables require validation for duplicate imports.
+- Metrics should be re-verified after the final data refresh.
 
-## 9. Recommended Business Actions
+---
 
-1.  Monitor inventory and availability in high-revenue product
-    categories.
-2.  Maintain reliable credit-card payment processing while supporting
-    other payment methods.
-3.  Investigate late deliveries by seller, destination, and time period.
-4.  Review low customer ratings and comments to identify product or
-    service issues.
-5.  Monitor cancelled and unavailable orders for fulfilment problems.
-6.  Reconcile SQL results with Power BI measures before sharing the
-    dashboard.
+## 📁 Project Structure
 
-## 10. Data Quality Checklist
+```
+Olist-Ecommerce-Sales-Analysis/
+├── 01_Raw_Data/          # Original CSV files
+├── 02_Cleaned_Data/      # Excel-cleaned files
+├── 03_SQL/               # MySQL analysis scripts
+├── 04_Database_Backup/   # Database backup
+├── 05_PowerBI/           # Power BI report (.pbix)
+├── 06_Documentation/     # Business insights and notes
+├── images/               # Dashboard screenshots
+└── README.md
+```
 
--   [ ] Refresh the Power BI model and clear unintended filters.
--   [ ] Confirm `order_id` is unique in the cleaned orders table.
--   [ ] Confirm month fields are sorted chronologically by
-    `Month Start`.
--   [ ] Use distinct order counts when tables contain multiple rows per
-    order.
--   [ ] Confirm late-delivery count and percentage use the same
-    denominator.
--   [ ] Reconcile the review count between MySQL and Power BI;
-    investigate the current 279 value.
--   [ ] Confirm item revenue uses item `price` and payment value uses
-    `payment_value`.
--   [ ] Confirm date columns are Date/Time and undelivered orders are
-    handled consistently.
+---
 
-## 11. Conclusion
+## 🚀 How to Reproduce
 
-The Olist project combines sales, payments, orders, delivery, and
-customer feedback in a set of Power BI dashboards. The current report
-indicates substantial item revenue, a strong preference for credit-card
-payments, an average review score above 4 out of 5, and a measurable
-late-delivery rate.
+1. Download the Olist dataset from Kaggle and place the CSV files in `01_Raw_Data/`.
+2. Clean the files in Excel (or use the files in `02_Cleaned_Data/`).
+3. Import the cleaned data into MySQL and run the scripts in `03_SQL/`.
+4. Open the `.pbix` file in `05_PowerBI/` and refresh the data source.
 
-The next priority is to validate the metrics and investigate performance
-by month, category, seller, and destination. This will make the
-dashboard more reliable and turn its visuals into actionable business
-recommendations.
+---
 
-------------------------------------------------------------------------
+## ✅ Conclusion
 
-**Project status:** Dashboard built; final metric validation and
-documentation review pending.
+This project demonstrates a complete analytics workflow: **cleaning data in Excel, analyzing it with MySQL, and presenting insights in Power BI**. It shows the ability to validate data quality, define business KPIs, and turn raw e-commerce data into actionable recommendations on revenue, payments, delivery, and customer satisfaction.
 
-**Note:** Update the figures in this document if the final refreshed
-report produces different values.
+---
